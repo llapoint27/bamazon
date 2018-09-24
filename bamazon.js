@@ -91,7 +91,7 @@ const promptCustomerForQuantity = product => {
             // If there isn't enough of the chosen product and quantity, let the user know and re-run loadProducts
             if (quantity > product.stock_quantity) {
                 console.log("\nInsufficient quantity!");
-                // loadProducts();
+                loadProducts();
             }
             else {
                 // Otherwise run makePurchase, give it the product information and desired quantity to purchase
@@ -117,6 +117,7 @@ const makePurchase = (product, quantity) => {
         [quantity, product.id],
         function (err, res) {
             // Let the user know the purchase was successful, re-run loadProducts
+
             console.log("\nSuccessfully purchased " + quantity + " " + product.product_name + "'s!");
             loadProducts();
         }
