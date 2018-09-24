@@ -26,18 +26,18 @@ const loadProducts = () => {
             throw err;
         }
         console.table(res);
+        promptCustomerForItem(res);
     });
 }
 
 const promptCustomerForItem = inventory => {
 
-    inquirer
-        .prompt([
+    inquirer.prompt([
             {
                 type: "input",
                 name: "choice",
                 message: "What is the ID of the item you would you like to purchase? [Quit with Q]",
-                validate: val => !NaN(val) || val.toLowerCase === "q"
+                validate: !isNaN(val) || val.toLowerCase === "q"
             }
         ])
         .then(val => {
@@ -47,6 +47,7 @@ const promptCustomerForItem = inventory => {
             const product = checkInventory(choiceId, inventory);
 
             // If there is a product with the id the user chose, prompt the customer for a desired quantity
+
             if (product) {
                 // Pass the chosen product to promptCustomerForQuantity
                 promptCustomerForQuantity(product);
@@ -60,15 +61,6 @@ const promptCustomerForItem = inventory => {
 
 }
 
-const checkInventory = (choiceID, inventory) => {
-
-
-    const item = inventory.filter(item => item.id === choiceID);
-    return item.length > 0 ? item[0] : null;
-
-
-}
-
 
 const checkIfShouldExit = choice => {
     if (choice.toLowerCase() === "q") {
@@ -79,6 +71,17 @@ const checkIfShouldExit = choice => {
 
 }
 
+const checkInventory = (choiceId, inventory) => {
+
+
+    const item = inventory.filter(item => item.id === choiceId);
+
+    //ternary operator: if then else, if greae=ter than 0, return the first item in the array, if item was not found inventory then return null
+    return item.length > 0 ? item[0] : null;
+
+}
+
+
 const promptCustomerForQuantity = product => {
 
     inquirer
@@ -88,13 +91,12 @@ const promptCustomerForQuantity = product => {
                 name: "quantity",
                 message: "How many would you like? [Quit with Q]",
                 validate: val => val > 0 || val.toLowerCase === "q"
-
             }
         ])
-        .then(function (val) {
+        .then(val => {
             // Check if the user wants to quit the program
             checkIfShouldExit(val.quantity);
-            var quantity = parseInt(val.quantity);
+            const quantity = parseInt(val.quantity);
 
             // If there isn't enough of the chosen product and quantity, let the user know and re-run loadProducts
             if (quantity > product.stock_quantity) {
