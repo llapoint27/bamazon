@@ -32,14 +32,15 @@ const loadProducts = () => {
 
 const promptCustomerForItem = inventory => {
 
+    //ask user to choose/type in an item ID
     inquirer.prompt([
-            {
-                type: "input",
-                name: "choice",
-                message: "What is the ID of the item you would you like to purchase? [Quit with Q]",
-                validate: !isNaN(val) || val.toLowerCase === "q"
-            }
-        ])
+        {
+            type: "input",
+            name: "choice",
+            message: "What is the ID of the item you would you like to purchase? [Quit with Q]",
+            validate: val => !isNaN(val) || val.toLowerCase === "q"
+        }
+    ])
         .then(val => {
             // Check if the user wants to quit the program
             checkIfShouldExit(val.choice);
@@ -50,6 +51,7 @@ const promptCustomerForItem = inventory => {
 
             if (product) {
                 // Pass the chosen product to promptCustomerForQuantity
+                //Asking the user how many units she would like
                 promptCustomerForQuantity(product);
             }
             else {
@@ -61,18 +63,7 @@ const promptCustomerForItem = inventory => {
 
 }
 
-
-const checkIfShouldExit = choice => {
-    if (choice.toLowerCase() === "q") {
-
-        console.log(`Goodbye`);
-        process.exit(0);
-    }
-
-}
-
 const checkInventory = (choiceId, inventory) => {
-
 
     const item = inventory.filter(item => item.id === choiceId);
 
@@ -80,7 +71,6 @@ const checkInventory = (choiceId, inventory) => {
     return item.length > 0 ? item[0] : null;
 
 }
-
 
 const promptCustomerForQuantity = product => {
 
@@ -101,7 +91,7 @@ const promptCustomerForQuantity = product => {
             // If there isn't enough of the chosen product and quantity, let the user know and re-run loadProducts
             if (quantity > product.stock_quantity) {
                 console.log("\nInsufficient quantity!");
-                loadProducts();
+                // loadProducts();
             }
             else {
                 // Otherwise run makePurchase, give it the product information and desired quantity to purchase
@@ -111,17 +101,26 @@ const promptCustomerForQuantity = product => {
 
 }
 
+const checkIfShouldExit = choice => {
+    if (choice.toLowerCase() === "q") {
+
+        console.log(`Goodbye`);
+        process.exit(0);
+    }
+
+}
+
 const makePurchase = (product, quantity) => {
 
-connection.query(
-    "UPDATE products SET stock_quantity = stock_quantity - ? WHERE item_id = ?",
-    [quantity, product.item_id],
-    function(err, res) {
-      // Let the user know the purchase was successful, re-run loadProducts
-      console.log("\nSuccessfully purchased " + quantity + " " + product.product_name + "'s!");
-      loadProducts();
-    }
-  );
+    connection.query(
+        "UPDATE products SET stock_quantity = stock_quantity - ? WHERE id = ?",
+        [quantity, product.id],
+        function (err, res) {
+            // Let the user know the purchase was successful, re-run loadProducts
+            console.log("\nSuccessfully purchased " + quantity + " " + product.product_name + "'s!");
+            loadProducts();
+        }
+    );
 }
 
 
