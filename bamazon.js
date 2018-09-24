@@ -91,6 +91,7 @@ const promptCustomerForQuantity = product => {
             // If there isn't enough of the chosen product and quantity, let the user know and re-run loadProducts
             if (quantity > product.stock_quantity) {
                 console.log("\nInsufficient quantity!");
+                console.log("\n--------------------------------\n")
                 loadProducts();
             }
             else {
@@ -105,6 +106,7 @@ const checkIfShouldExit = choice => {
     if (choice.toLowerCase() === "q") {
 
         console.log(`Goodbye`);
+        console.log("\n--------------------------------\n")
         process.exit(0);
     }
 
@@ -119,6 +121,7 @@ const makePurchase = (product, quantity) => {
             // Let the user know the purchase was successful, re-run loadProducts
 
             console.log("\nSuccessfully purchased " + quantity + " " + product.product_name + "'s!");
+            console.log("\n--------------------------------\n")
             loadProducts();
         }
     );

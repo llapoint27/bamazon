@@ -12,7 +12,7 @@ The app will take in orders from customers and deplete stock from the store's in
 <br><br>
 You will choose the product by its number ID, then choose how many units you'd like to purchase. 
 <br><br>
-![choose_ID](/assets/chooseID.png)
+![quantity](/assets/quantity.png)
 <br><b>
 The app will determine if the quantity requested is available in stock. If so, you have successfully purchased the amount of your product, if not you will have to adjust your request. Then a product is purchased the MySQL database will reflect the inventory change. 
 <br><br>
