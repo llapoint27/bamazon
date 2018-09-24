@@ -14,10 +14,11 @@ You will choose the product by its number ID, then choose how many units you'd l
 <br><br>
 ![quantity](/assets/quantity.png)
 <br><b>
-The app will determine if the quantity requested is available in stock. If so, you have successfully purchased the amount of your product, if not you will have to adjust your request. Then a product is purchased the MySQL database will reflect the inventory change. 
+The app will determine if the quantity requested is available in stock. If so, you have successfully purchased the amount of your product, if not you will have to adjust your request. Then a product is purchased the MySQL database will reflect the inventory change.
 <br><br>
 ![mySQL](/assets/mysql.png)
 The item chosen: Manduka Blocks went from 100 in stock to 50 in MySQL database. 
 <br><br>
 Example of user that request more than was in stock for a particular product:
+<br><br>
 ![insufficient_inventory](/assets/insufficient.png)
