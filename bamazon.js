@@ -72,6 +72,17 @@ const checkInventory = (choiceId, inventory) => {
 
 }
 
+const checkIfShouldExit = choice => {
+    if (choice.toLowerCase() === "q") {
+
+        console.log(`Goodbye`);
+        console.log("\n--------------------------------\n")
+        process.exit(0);
+    }
+
+}
+
+
 const promptCustomerForQuantity = product => {
 
     inquirer
@@ -99,16 +110,6 @@ const promptCustomerForQuantity = product => {
                 makePurchase(product, quantity);
             }
         });
-
-}
-
-const checkIfShouldExit = choice => {
-    if (choice.toLowerCase() === "q") {
-
-        console.log(`Goodbye`);
-        console.log("\n--------------------------------\n")
-        process.exit(0);
-    }
 
 }
 
